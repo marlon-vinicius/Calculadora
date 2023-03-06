@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span v-model="caixaTexto">{{visor}}</span>
+        <button v-model="sete" v-on:click="alterarValor">7</button>
+        <button v-model="oito" v-on:click="alterarValor">8</button>
+        <button v-model="nove" v-on:click="alterarValor">9</button>
+        <button v-model="dividir" @click="dividir">/</button>
+        <button v-model="quatro" v-on:click="alterarValor">4</button>
+        <button v-model="cinco" v-on:click="alterarValor">5</button>
+        <button v-model="seis" v-on:click="alterarValor">6</button>
+        <button v-model="multiplicar" @click="multiplicar">*</button>
+        <button v-model="um" v-on:click="alterarValor">1</button>
+        <button v-model="dois" v-on:click="alterarValor">2</button>
+        <button v-model="tres" v-on:click="alterarValor">3</button>
+        <button v-model="subtrair" @click="subtrair">-</button>
+        <button v-model="zero" v-on:click="alterarValor">0</button>
+        <button v-model="ponto" v-on:click="alterarValor">.</button>
+        <button v-model="igual" v-on:click="igual">=</button>
+        <button v-model="somar" @click="somar">+</button>
+        <button v-model="limpar" @click="limpar">C</button>
+
+    </div>
+</body>
+</html>
+
+<script>
+    const {createApp} = Vue 
+
+    createApp({
+        data(){
+            return {
+                visor: '',
+                caixaTexto :'',
+                um: 1,
+                dois: 2,
+                tres: 3,
+                quatro: 4,
+                cinco: 5,
+                seis: 6,
+                sete: 7,
+                oito: 8,
+                nove: 9,
+                ponto: "."
+            }
+        },
+        methods: {
+            alterarValor: function(){
+                this.visor = this.um
+            },
+            somar: function(){
+                this.caixaTexto = parseInt(this.numero1) + parseInt(this.numero2)
+            },
+            subtrair: function(){
+                this.caixaTexto = parseInt(this.numero1) - parseInt(this.numero2)
+            },
+            multiplicar: function(){
+                this.caixaTexto = parseInt(this.numero1) * parseInt(this.numero2)
+            },
+            dividir: function(){
+                this.caixaTexto = parseInt(this.numero1) / parseInt(this.numero2)
+            }
+            
+        }
+    }).mount("#app")
+</script>
