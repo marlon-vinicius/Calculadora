@@ -9,25 +9,24 @@
 </head>
 <body>
     <div id="app">
-        <span v-model="caixaTexto">{{visor}}</span>
-        <button v-model="sete" v-on:click="alterarValor">7</button>
-        <button v-model="oito" v-on:click="alterarValor">8</button>
-        <button v-model="nove" v-on:click="alterarValor">9</button>
-        <button v-model="dividir" @click="dividir">/</button>
-        <button v-model="quatro" v-on:click="alterarValor">4</button>
-        <button v-model="cinco" v-on:click="alterarValor">5</button>
-        <button v-model="seis" v-on:click="alterarValor">6</button>
-        <button v-model="multiplicar" @click="multiplicar">*</button>
-        <button v-model="um" v-on:click="alterarValor">1</button>
-        <button v-model="dois" v-on:click="alterarValor">2</button>
-        <button v-model="tres" v-on:click="alterarValor">3</button>
-        <button v-model="subtrair" @click="subtrair">-</button>
-        <button v-model="zero" v-on:click="alterarValor">0</button>
-        <button v-model="ponto" v-on:click="alterarValor">.</button>
-        <button v-model="igual" v-on:click="igual">=</button>
-        <button v-model="somar" @click="somar">+</button>
-        <button v-model="limpar" @click="limpar">C</button>
-
+        <span>{{visor}}</span>
+        <button v-on:click="numero('7')">7</button>
+        <button v-on:click="numero('8')">8</button>
+        <button v-on:click="numero('9')">9</button>
+        <button v-on:click="dividir">/</button>
+        <button v-on:click="numero('4')">4</button>
+        <button v-on:click="numero('5')">5</button>
+        <button v-on:click="numero('6')">6</button>
+        <button v-on:click="multiplicar">*</button>
+        <button v-on:click="numero('1')">1</button>
+        <button v-on:click="numero('2')">2</button>
+        <button v-on:click="numero('3')">3</button>
+        <button v-on:click="subtrair">-</button>
+        <button v-on:click="numero('0')">0</button>
+        <button v-on:click="numero('.')">.</button>
+        <button v-on:click="resultado">=</button>
+        <button v-on:click="somar">+</button>
+        <button v-on:click="limpar">C</button>
     </div>
 </body>
 </html>
@@ -35,40 +34,58 @@
 <script>
     const {createApp} = Vue 
 
-    createApp({
-        data(){
-            return {
-                visor: '',
-                caixaTexto :'',
-                um: 1,
-                dois: 2,
-                tres: 3,
-                quatro: 4,
-                cinco: 5,
-                seis: 6,
-                sete: 7,
-                oito: 8,
-                nove: 9,
-                ponto: "."
-            }
-        },
-        methods: {
-            alterarValor: function(){
-                this.visor = this.um
-            },
-            somar: function(){
-                this.caixaTexto = parseInt(this.numero1) + parseInt(this.numero2)
-            },
-            subtrair: function(){
-                this.caixaTexto = parseInt(this.numero1) - parseInt(this.numero2)
-            },
-            multiplicar: function(){
-                this.caixaTexto = parseInt(this.numero1) * parseInt(this.numero2)
-            },
-            dividir: function(){
-                this.caixaTexto = parseInt(this.numero1) / parseInt(this.numero2)
-            }
-            
+createApp({
+    data(){
+        return {
+            visor: '',
+            numeroAnterior: null,
+            operador: null,
+            operadorClicado : false,
         }
-    }).mount("#app")
+    },
+    methods: {
+        numero: function(numero){
+            if (this.operadorClicado) {
+                this.visor = ''
+                this.operadorClicado = false
+            }
+            this.visor = `${this.visor}${numero}`
+        },
+        ponto: function() {
+            if (this.valorCorrente.indexOf('.') === -1) {
+            this.numero('.')
+            }
+        },            
+        alterarValor: function(){
+            this.numeroAnterior = this.visor
+            this.operadorClicado = true
+        },
+        somar: function(){
+            this.operador = (num1,num2) => num1 + num2
+            this.alterarValor()
+        },
+        subtrair: function(){
+            this.operador = (num1,num2) => num1 - num2
+            this.alterarValor()
+        },
+        multiplicar: function(){
+            this.operador = (num1,num2) => num1 * num2
+            this.alterarValor()
+        },
+        dividir: function(){
+            this.operador = (num1,num2) => num1 / num2
+            this.alterarValor()
+        },
+        limpar: function(){
+            this.visor = ''
+        },
+        resultado: function() {
+            this.visor = `${this.operador(
+                parseFloat(this.numeroAnterior),
+                parseFloat(this.visor)
+            )}`
+            this.numeroAnterior = null
+        },            
+    }
+}).mount("#app")
 </script>
