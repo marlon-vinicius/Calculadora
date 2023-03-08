@@ -6,27 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div id="app">
-        <span>{{visor}}</span>
-        <button v-on:click="numero('7')">7</button>
-        <button v-on:click="numero('8')">8</button>
-        <button v-on:click="numero('9')">9</button>
-        <button v-on:click="dividir">/</button>
-        <button v-on:click="numero('4')">4</button>
-        <button v-on:click="numero('5')">5</button>
-        <button v-on:click="numero('6')">6</button>
-        <button v-on:click="multiplicar">*</button>
-        <button v-on:click="numero('1')">1</button>
-        <button v-on:click="numero('2')">2</button>
-        <button v-on:click="numero('3')">3</button>
-        <button v-on:click="subtrair">-</button>
-        <button v-on:click="numero('0')">0</button>
-        <button v-on:click="numero('.')">.</button>
-        <button v-on:click="resultado">=</button>
-        <button v-on:click="somar">+</button>
-        <button v-on:click="limpar">C</button>
+        <div id="calculadora">
+            <div id="visor">
+                <span class="visor">{{visor}}</span>
+            </div>
+            
+            <div id="teclado">
+                <div><button class="numero" @click="numero('7')">7</button></div>
+                <div><button class="numero" @click="numero('8')">8</button></div>
+                <div><button class="numero" @click="numero('9')">9</button></div>
+                <div><button class="operador" @click="dividir">/</button></div>
+                <div><button class="numero" @click="numero('4')">4</button></div>
+                <div><button class="numero" @click="numero('5')">5</button></div>
+                <div><button class="numero" @click="numero('6')">6</button></div>
+                <div><button class="operador" @click="multiplicar">*</button></div>
+                <div><button class="numero" @click="numero('1')">1</button></div>
+                <div><button class="numero" @click="numero('2')">2</button></div>
+                <div><button class="numero" @click="numero('3')">3</button></div>
+                <div><button class="operador" @click="subtrair">-</button></div>
+                <div><button class="numero" @click="numero('0')">0</button></div>
+                <div><button class="numero" @click="numero('.')">.</button></div>
+                <div><button class="operador" @click="resultado">=</button></div>
+                <div><button class="operador" @click="somar">+</button></div>
+                <div><button id="limpar" @click="limpar">C</button></div>
+            </div>
+
+        </div>       
     </div>
 </body>
 </html>

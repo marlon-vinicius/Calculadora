@@ -1,0 +1,84 @@
+* {
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em;
+}
+
+#calculadora {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px;
+    justify-content: center;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: -30px 20px 20px grey; ;
+}
+
+#visor {
+    margin: 1em;
+    background-color: rgb(0, 122, 82);
+    height: 50px;
+    text-align: right;
+    color: white;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+#teclado {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 3px;
+    justify-items: center;
+    padding: 5px 0 5px 0;
+}
+  
+#teclado button {
+    border: 1px solid transparent;
+    border-radius: 0.5em;
+    width: 4em;
+    height: 4em;
+    font-size: 1.2em;
+    margin-bottom: 3px;    
+    cursor: pointer;   
+}
+
+#teclado .numero {
+    background-color: #f3f3f3;
+    box-shadow: 3px 3px 3px 1px grey inset;
+}
+  
+#teclado .numero:hover {
+    background-color: #bababa;
+    box-shadow: 3px 3px 3px 1px rgb(68, 68, 68) inset;
+}
+
+#teclado .operador {
+    background-color: #ee8743;
+    box-shadow: 3px 3px 3px 1px #8b4b20 inset;
+}
+
+#teclado .operador:hover{
+    background-color: #e2742b;
+    box-shadow: 3px 3px 3px 1px #663717 inset;
+}
+  
+#teclado  #limpar{
+    grid-column: span 4;
+    background-color: #75a5cb;
+    box-shadow: 3px 3px 3px 1px #385872 inset;
+}
+  
+#teclado #limpar:hover {
+    grid-column: span 4;
+    background-color: #4495d6;
+    box-shadow: 3px 3px 3px 1px #273e50 inset;
+}
