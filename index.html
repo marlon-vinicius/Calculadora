@@ -12,27 +12,27 @@
     <div id="app">
         <div id="calculadora">
             <div id="visor">
-                <span class="visor">{{visor}}</span>
+                {{visor}}
             </div>
             
             <div id="teclado">
-                <div><button class="numero" @click="numero('7')">7</button></div>
-                <div><button class="numero" @click="numero('8')">8</button></div>
-                <div><button class="numero" @click="numero('9')">9</button></div>
-                <div><button class="operador" @click="dividir">/</button></div>
-                <div><button class="numero" @click="numero('4')">4</button></div>
-                <div><button class="numero" @click="numero('5')">5</button></div>
-                <div><button class="numero" @click="numero('6')">6</button></div>
-                <div><button class="operador" @click="multiplicar">*</button></div>
-                <div><button class="numero" @click="numero('1')">1</button></div>
-                <div><button class="numero" @click="numero('2')">2</button></div>
-                <div><button class="numero" @click="numero('3')">3</button></div>
-                <div><button class="operador" @click="subtrair">-</button></div>
-                <div><button class="numero" @click="numero('0')">0</button></div>
-                <div><button class="numero" @click="numero('.')">.</button></div>
-                <div><button class="operador" @click="resultado">=</button></div>
-                <div><button class="operador" @click="somar">+</button></div>
-                <div><button id="limpar" @click="limpar">C</button></div>
+                <div><button class="numero" @click="numeroPressionado('7')">7</button></div>
+                <div><button class="numero" @click="numeroPressionado('8')">8</button></div>
+                <div><button class="numero" @click="numeroPressionado('9')">9</button></div>
+                <div><button class="operador" @click="operadorPressionado('/')">/</button></div>
+                <div><button class="numero" @click="numeroPressionado('4')">4</button></div>
+                <div><button class="numero" @click="numeroPressionado('5')">5</button></div>
+                <div><button class="numero" @click="numeroPressionado('6')">6</button></div>
+                <div><button class="operador" @click="operadorPressionado('*')">*</button></div>
+                <div><button class="numero" @click="numeroPressionado('1')">1</button></div>
+                <div><button class="numero" @click="numeroPressionado('2')">2</button></div>
+                <div><button class="numero" @click="numeroPressionado('3')">3</button></div>
+                <div><button class="operador" @click="operadorPressionado('-')">-</button></div>
+                <div><button class="numero" @click="numeroPressionado('0')">0</button></div>
+                <div><button class="numero" @click="pontoPressionado()">.</button></div>
+                <div><button class="operador" @click="calculo()">=</button></div>
+                <div><button class="operador" @click="operadorPressionado('+')">+</button></div>
+                <div><button id="limpar" @click="limpar()">C</button></div>
             </div>
 
         </div>       
@@ -46,54 +46,62 @@
 createApp({
     data(){
         return {
-            visor: '',
-            numeroAnterior: null,
+            visor: '0',
+            primeiroNumero: null,
             operador: null,
-            operadorClicado : false,
+            resetVisor: false
         }
     },
     methods: {
-        numero: function(numero){
-            if (this.operadorClicado) {
-                this.visor = ''
-                this.operadorClicado = false
+        numeroPressionado: function(numero){
+            if (this.visor === '0' || this.resetVisor) {
+                this.visor = '' + numero
+                this.resetVisor = false
+            } else {
+                this.visor += '' + numero;
             }
-            this.visor = `${this.visor}${numero}`
         },
-        ponto: function() {
-            if (this.valorCorrente.indexOf('.') === -1) {
-            this.numero('.')
+        pontoPressionado: function() {
+            if (!this.visor.includes('.')) {
+                this.visor += '.'
             }
-        },            
-        alterarValor: function(){
-            this.numeroAnterior = this.visor
-            this.operadorClicado = true
         },
-        somar: function(){
-            this.operador = (num1,num2) => num1 + num2
-            this.alterarValor()
-        },
-        subtrair: function(){
-            this.operador = (num1,num2) => num1 - num2
-            this.alterarValor()
-        },
-        multiplicar: function(){
-            this.operador = (num1,num2) => num1 * num2
-            this.alterarValor()
-        },
-        dividir: function(){
-            this.operador = (num1,num2) => num1 / num2
-            this.alterarValor()
+        operadorPressionado: function(operador) {
+            if (this.operador !== null) {
+                this.calculo()
+            }
+            this.primeiroNumero = parseFloat(this.visor);
+            this.operador = operador
+            this.resetVisor = true
         },
         limpar: function(){
-            this.visor = ''
+            this.visor = '0'
+            this.primeiroNumero = null
+            this.operador = null
         },
-        resultado: function() {
-            this.visor = `${this.operador(
-                parseFloat(this.numeroAnterior),
-                parseFloat(this.visor)
-            )}`
-            this.numeroAnterior = null
+        calculo: function() {
+            if (this.operador !== null) {
+                const segundoNumero = parseFloat(this.visor)
+                let resultado
+                switch (this.operador) {
+                    case '+':
+                        resultado = this.primeiroNumero + segundoNumero
+                        break
+                    case '-':
+                        resultado = this.primeiroNumero - segundoNumero
+                        break
+                    case '*':
+                        resultado = this.primeiroNumero * segundoNumero
+                        break
+                    case '/':
+                        resultado = this.primeiroNumero / segundoNumero
+                        break
+                    }
+            this.visor = '' + resultado
+            this.primeiroNumero = resultado
+            this.operador = null
+            this.resetVisor = true
+            }
         },            
     }
 }).mount("#app")
