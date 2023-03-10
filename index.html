@@ -97,7 +97,11 @@ createApp({
                         resultado = this.primeiroNumero / segundoNumero
                         break
                     }
-            this.visor = '' + resultado
+            if (resultado == 'Infinity'){
+                this.visor = 'Erro'
+            } else {
+                this.visor = '' + resultado
+            }            
             this.primeiroNumero = resultado
             this.operador = null
             this.resetVisor = true
